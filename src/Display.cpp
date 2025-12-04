@@ -1,6 +1,6 @@
 #include "../include/Display.h"
 
-#ifdef ARDUINO
+#ifndef NATIVE_PLATFORM
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -18,7 +18,7 @@ static Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 #endif
 
 void Display::init() {
-#ifdef ARDUINO
+#ifndef NATIVE_PLATFORM
     if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
         // Serial.println(F("SSD1306 allocation failed"));
         for(;;); // Don't proceed, loop forever
@@ -42,7 +42,7 @@ void Display::showReading(GasSensor* sensor) {
 }
 
 void Display::showAllSensors(const std::vector<GasSensor*>& sensors) {
-#ifdef ARDUINO
+#ifndef NATIVE_PLATFORM
     display.clearDisplay();
     display.setCursor(0,0);
     display.setTextSize(1);
@@ -80,7 +80,7 @@ void Display::showAllSensors(const std::vector<GasSensor*>& sensors) {
 }
 
 void Display::showAlert(const std::string& message) {
-#ifdef ARDUINO
+#ifndef NATIVE_PLATFORM
     display.clearDisplay();
     display.setCursor(0, 0);
     display.setTextSize(2); // Big text
