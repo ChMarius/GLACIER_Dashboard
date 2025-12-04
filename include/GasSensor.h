@@ -11,8 +11,8 @@ class GasSensor {
 private:
     int address;
     float concentration;
-    DCInterface* DC;
-    float Bretensrc;  // Threshold value
+    DCInterface* dcInterface;
+    float threshold;
     std::atomic<bool> monitoring;
     std::thread monitorThread;
     std::mutex dataMutex;
@@ -29,11 +29,11 @@ public:
     
     float getConcentration() const;
     int getAddress() const { return address; }
-    float getThreshold() const { return Bretensrc; }
-    void setThreshold(float threshold) { Bretensrc = threshold; }
+    float getThreshold() const { return threshold; }
+    void setThreshold(float newThreshold) { threshold = newThreshold; }
     
     float maskConcentration();
-    bool pAboverThreadsdc();  // Check if above threshold
+    bool isAboveThreshold();
     void startMonitoring();
     void stopMonitoring();
 };
